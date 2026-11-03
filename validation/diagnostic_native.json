@@ -1,0 +1,64 @@
+{
+  "scope": "Final production diagnostic selftest core unchanged; TEST_WORDS=1024, native encrypted controller, ideal50MHz/forward-delay8.375ns, one public posedge data register with raw valid unchanged, official IS42s32200 default AC surrogate. Not full 8MiB, EM638325 min/max, physical DQ or PVT signoff.",
+  "core_sha256": "63c75e4b3247219c8a4739e725a7db2fc025a96783becc99d44a6360922a2a76",
+  "input_sha256": {
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/global_def.v": "b3505d4d960fd21e07630be0ad3d0730dd26041fbf34707a6faff4ff4617a82b",
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/sdr_init_ref.enc.v": "6da5945f4af793610d0d64c65c7e5d2d1c86ed4c11bc5fdeacd27eb03178b9f6",
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/sdr_wrrd.enc.v": "c7d7fe07d75f66aa88d9f986b3006319c995162434f104f9990664b374cdfdd2",
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/sdr_as_ram.enc.v": "767dbdfbd83d42223b77dfa7deab42ce8216a8fd6f6cb41b7e7593d9a345ba57",
+    "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v": "63c75e4b3247219c8a4739e725a7db2fc025a96783becc99d44a6360922a2a76",
+    "<HISTORICAL_PROJECT>/material/vendor_review_20261022/timing_audit/references/APUG011_high_performance_sdram_read_write_reference_design_v1.2/IS42s32200.v": "6aad09c411b00e319ea6e7ff5a85453eb990532541ae368084406f78a276690b"
+  },
+  "inputs_unchanged": true,
+  "shadow_header": "\n\n\n`define   DATA_WIDTH                        32\n`define   ADDR_WIDTH                        21\n`define   DM_WIDTH                          4\n\n`define   ROW_WIDTH                        11\n`define   BA_WIDTH                        2\n\n`define SDR_CLK_PERIOD (1000000000/50000000)\n// Conservative 15.6us interval; native controller counts terminal+1 clocks.\n`define   SELF_REFRESH_INTERVAL             ((15600 / `SDR_CLK_PERIOD) - 1)\n\n",
+  "commands": [
+    {
+      "command": [
+        "<MODELSIM_HOME>/vlib.exe",
+        "work"
+      ],
+      "native_exit": 0,
+      "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/0_vlib.log"
+    },
+    {
+      "command": [
+        "<MODELSIM_HOME>/vlog.exe",
+        "-modelsimini",
+        "modelsim.ini",
+        "-permissive",
+        "-sv",
+        "-work",
+        "work",
+        "+incdir+<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/shadow/td_project",
+        "+incdir+<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/shadow/user_source/hdl_source/include",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/shadow/user_source/hdl_source/include/sdr_init_ref.enc.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/shadow/user_source/hdl_source/include/sdr_wrrd.enc.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/shadow/user_source/hdl_source/include/sdr_as_ram.enc.v",
+        "<HISTORICAL_PROJECT>/material/vendor_review_20261022/timing_audit/references/APUG011_high_performance_sdram_read_write_reference_design_v1.2/IS42s32200.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/sdram_address_selftest.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/tb_selftest_native50_final.sv"
+      ],
+      "native_exit": 0,
+      "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/1_vlog.log"
+    },
+    {
+      "command": [
+        "<MODELSIM_HOME>/vsim.exe",
+        "-c",
+        "-modelsimini",
+        "modelsim.ini",
+        "-l",
+        "transcript.log",
+        "-do",
+        "run.do"
+      ],
+      "native_exit": 0,
+      "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/core_native50_1024_final/2_vsim.log"
+    }
+  ],
+  "result": "BOUNDARY mode=0 address=0 valid=1 aligned=a5c39e71 expected=a5c39e71 raw=a5c39e70\nBOUNDARY mode=0 address=255 valid=1 aligned=a5c39e8e expected=a5c39e8e raw=zzzzzzzz\nBOUNDARY mode=0 address=256 valid=1 aligned=a5c39f71 expected=a5c39f71 raw=a5c39f70\nBOUNDARY mode=0 address=511 valid=1 aligned=a5c39f8e expected=a5c39f8e raw=zzzzzzzz\nBOUNDARY mode=0 address=512 valid=1 aligned=a5c39c71 expected=a5c39c71 raw=a5c39c70\nBOUNDARY mode=0 address=767 valid=1 aligned=a5c39c8e expected=a5c39c8e raw=zzzzzzzz\nBOUNDARY mode=0 address=768 valid=1 aligned=a5c39d71 expected=a5c39d71 raw=a5c39d70\nBOUNDARY mode=0 address=1023 valid=1 aligned=a5c39d8e expected=a5c39d8e raw=zzzzzzzz\nBOUNDARY mode=1 address=0 valid=1 aligned=55aa55aa expected=55aa55aa raw=aa55aa55\nBOUNDARY mode=1 address=255 valid=1 aligned=aa55aa55 expected=aa55aa55 raw=zzzzzzzz\nBOUNDARY mode=1 address=256 valid=1 aligned=55aa55aa expected=55aa55aa raw=aa55aa55\nBOUNDARY mode=1 address=511 valid=1 aligned=aa55aa55 expected=aa55aa55 raw=zzzzzzzz\nBOUNDARY mode=1 address=512 valid=1 aligned=55aa55aa expected=55aa55aa raw=aa55aa55\nBOUNDARY mode=1 address=767 valid=1 aligned=aa55aa55 expected=aa55aa55 raw=zzzzzzzz\nBOUNDARY mode=1 address=768 valid=1 aligned=55aa55aa expected=55aa55aa raw=aa55aa55\nBOUNDARY mode=1 address=1023 valid=1 aligned=aa55aa55 expected=aa55aa55 raw=zzzzzzzz\nBOUNDARY mode=2 address=0 valid=1 aligned=40aec71f expected=40aec71f raw=40aae73e\nBOUNDARY mode=2 address=255 valid=1 aligned=434d39ef expected=434d39ef raw=zzzzzzzz\nBOUNDARY mode=2 address=256 valid=1 aligned=448ee40f expected=448ee40f raw=448ac42e\nBOUNDARY mode=2 address=511 valid=1 aligned=476d1aff expected=476d1aff raw=zzzzzzzz\nBOUNDARY mode=2 address=512 valid=1 aligned=48ee813f expected=48ee813f raw=48eaa11e\nBOUNDARY mode=2 address=767 valid=1 aligned=4b0d7fcf expected=4b0d7fcf raw=zzzzzzzz\nBOUNDARY mode=2 address=768 valid=1 aligned=4ccea22f expected=4ccea22f raw=4cca820e\nBOUNDARY mode=2 address=1023 valid=1 aligned=4f2d5cdf expected=4f2d5cdf raw=zzzzzzzz\nEND completed=1 failures=0 pass=1 failed=0 errors=0 flags=0 words=1024 written=3072 checked=3072 writes=3072 reads=3072 responses=3072 modes=3 boundary_checks=24 raw_mismatches=3072 read_commands=768 auto_refresh=8 first_error_address=000000 first_expected=00000000 first_actual=00000000 cycles=138101\n",
+  "runtime_tool_errors": 0,
+  "native_exit": 0,
+  "surrogate_core_pass": true,
+  "real_hardware_pass": false
+}

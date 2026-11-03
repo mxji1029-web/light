@@ -1,0 +1,132 @@
+<div id="listening-album-lyrics">
+  <style>
+    #listening-album-lyrics { --paper:#f1e3c9; --ink:#30271f; --dim:#b5a58e; --gold:#f1c78b; color:var(--paper); font-family:"Microsoft YaHei",sans-serif; width:100%; }
+    #listening-album-lyrics * {box-sizing:border-box}
+    #listening-album-lyrics .album {background:#201c18; overflow:hidden; border-radius:12px; max-width:760px; margin:auto;}
+    #listening-album-lyrics .picture {position:relative; aspect-ratio:4/3; width:100%;}
+    #listening-album-lyrics canvas {display:block; width:100%; height:100%;}
+    #listening-album-lyrics .transport {padding:14px 18px 16px; display:grid; gap:12px; border-top:1px solid #74614a55;}
+    #listening-album-lyrics .row {display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+    #listening-album-lyrics button,#listening-album-lyrics select {font:inherit; min-height:40px; background:#352b22; color:var(--paper); border:1px solid #a18b6755; border-radius:6px; padding:7px 12px;}
+    #listening-album-lyrics button:focus-visible,#listening-album-lyrics select:focus-visible,#listening-album-lyrics input:focus-visible {outline:2px solid var(--gold);outline-offset:3px}
+    #listening-album-lyrics .play {background:var(--gold);color:var(--ink);min-width:100px; font-weight:600;}
+    #listening-album-lyrics .time {font:12px ui-monospace,monospace; color:var(--dim);margin-left:auto;}
+    #listening-album-lyrics input {accent-color:var(--gold);min-width:0;}
+    #listening-album-lyrics .seek {width:100%; margin:0;}
+    #listening-album-lyrics label {font-size:12px;color:var(--dim);display:flex;gap:8px;align-items:center;}
+    #listening-album-lyrics .offset {width:100px;}
+    #listening-album-lyrics .status {font-size:12px;color:var(--dim);min-height:18px;}
+    @media(max-width:420px){#listening-album-lyrics .transport{padding:12px;gap:10px}#listening-album-lyrics .row{gap:8px}#listening-album-lyrics button,#listening-album-lyrics select{padding:7px 9px;min-height:44px;font-size:13px}#listening-album-lyrics .time{margin-left:0}#listening-album-lyrics .offset{width:82px}}
+  </style>
+  <div class="album">
+    <div class="picture"><canvas width="1280" height="960" role="img" aria-label="家庭绘本相册，暖金手写歌词随演唱逐字弹入，跳动幅度随音乐强弱变化"></canvas></div>
+    <div class="transport">
+      <div class="row"><button type="button" class="play">播放预览</button><button type="button" class="restart">重播</button><select aria-label="照片场景"><option value="0">儿时 · 学走路</option><option value="1">成长 · 学骑车</option><option value="2">过年 · 包饺子</option></select><span class="time">00:00 / 00:28</span></div>
+      <input class="seek" type="range" min="0" max="28" step="0.01" value="0" aria-label="播放进度">
+      <div class="row"><label>歌词校准 <input class="offset" type="range" min="-1" max="1" step="0.05" value="0"><output>0.00 秒</output></label><label><input class="motion" type="checkbox" checked> 音量弹跳</label></div>
+      <div class="status" role="status" aria-live="polite">《我记得》· 约 28 秒风格预览</div>
+    </div>
+  </div>
+  <script>
+  (()=>{
+    const D=/*__PAYLOAD__*/;
+    const root=document.getElementById('listening-album-lyrics');
+    const canvas=root.querySelector('canvas'),g=canvas.getContext('2d');
+    const play=root.querySelector('.play'),restart=root.querySelector('.restart'),seek=root.querySelector('.seek'),
+      scene=root.querySelector('select'),offset=root.querySelector('.offset'),offsetOut=root.querySelector('output'),
+      motion=root.querySelector('.motion'),clock=root.querySelector('.time'),status=root.querySelector('.status');
+    const audio=new Audio(D.audio);audio.preload='auto';audio.volume=.8;
+    const atlas=new Image();atlas.src=D.atlas;
+    const photos=D.backgrounds.map(x=>{const im=new Image();im.src=x.src;return im});
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced)motion.checked=false;
+    let ac,analyser,bytes,source,env=0,peak=0,last=0,sceneId=0,changed=0,previousScene=0,failed=false;
+    let debugTime=null;
+    seek.max=D.duration;
+    const times=t=>{t=Math.max(0,t);return String(Math.floor(t/60)).padStart(2,'0')+':'+String(Math.floor(t%60)).padStart(2,'0')};
+    async function connect(){
+      if(!ac){ac=new (window.AudioContext||window.webkitAudioContext)();source=ac.createMediaElementSource(audio);analyser=ac.createAnalyser();analyser.fftSize=1024;bytes=new Float32Array(analyser.fftSize);source.connect(analyser);analyser.connect(ac.destination);}
+      if(ac.state!=='running')await ac.resume();
+    }
+    play.addEventListener('click',async()=>{try{await connect();if(audio.paused){if(audio.ended)audio.currentTime=0;await audio.play();}else audio.pause();}catch(e){failed=true;status.textContent='音频未能播放，请用本机 Chrome 或 Edge 打开预览。';console.error(e);}});
+    audio.addEventListener('play',()=>{play.textContent='暂停';status.textContent='正在播放 · 真实音乐包络驱动字的跳动'});
+    audio.addEventListener('pause',()=>{play.textContent='继续播放';if(!audio.ended)status.textContent='已暂停 · 歌词与音乐一起停住'});
+    audio.addEventListener('ended',()=>{play.textContent='重新播放';status.textContent='预览结束';});
+    restart.addEventListener('click',()=>{audio.currentTime=0;debugTime=null;env=0;peak=0;seek.value=0;if(audio.paused)play.textContent='播放预览'});
+    seek.addEventListener('input',()=>{audio.currentTime=Number(seek.value);debugTime=null;});
+    offset.addEventListener('input',()=>{offsetOut.value=(Number(offset.value)>0?'+':'')+Number(offset.value).toFixed(2)+' 秒';});
+    scene.addEventListener('change',()=>{previousScene=sceneId;sceneId=Number(scene.value);changed=performance.now();});
+    function picture(id,opacity){if(!photos[id].complete)return;g.globalAlpha=opacity;g.drawImage(photos[id],0,0,640,480);g.globalAlpha=1;}
+    function glyph(ch,x,y,size,color,alpha=1){
+      const index=D.chars.indexOf(ch);if(index<0||!atlas.complete)return;
+      const c=D.cell,sx=(index%D.cols)*c,sy=Math.floor(index/D.cols)*c;
+      // Reusable glyph mask is tinted once per colour; no runtime font dependency.
+      if(!glyph.tints)glyph.tints={};
+      if(!glyph.tints[color]){const c=document.createElement('canvas');c.width=atlas.width;c.height=atlas.height;const a=c.getContext('2d');a.drawImage(atlas,0,0);a.globalCompositeOperation='source-in';a.fillStyle=color;a.fillRect(0,0,c.width,c.height);glyph.tints[color]=c;}
+      g.globalAlpha=alpha;g.drawImage(glyph.tints[color],sx,sy,c,c,x-size/2,y-size/2,size,size);g.globalAlpha=1;
+    }
+    // The newest started phrase owns the lyric lane. A previous phrase's
+    // post-roll must never take priority over a newly started phrase.
+    function chooseLine(song){
+      let index=-1;
+      for(let i=0;i<D.lines.length;i++){
+        if(D.lines[i].s<=song)index=i;else break;
+      }
+      if(index<0)return {line:null,index:-1,opacity:0};
+      const line=D.lines[index];
+      const nextStart=D.lines[index+1]?.s??Infinity;
+      const deadline=Math.min(line.e+.30,nextStart);
+      if(song>=deadline)return {line:null,index:-1,opacity:0};
+      // Fade only after the final sung word finishes, including long notes.
+      const fadeDuration=Math.min(.18,Math.max(0,deadline-line.e));
+      const opacity=fadeDuration>0?Math.min(1,(deadline-song)/fadeDuration):1;
+      return {line,index,opacity};
+    }
+    function render(now){
+      const dt=Math.min(.06,Math.max(0,(now-last)/1000));last=now;
+      let power=0;
+      if(analyser&&!audio.paused){analyser.getFloatTimeDomainData(bytes);for(const v of bytes)power+=v*v;power=Math.sqrt(power/bytes.length);}
+      const target=Math.min(1,Math.pow(power*4.3,.72));
+      if(!audio.paused){env+=(target-env)*Math.min(1,dt*(target>env?24:5));peak=Math.max(env,peak-dt*.4);}
+      g.setTransform(2,0,0,2,0,0);g.clearRect(0,0,640,480);g.fillStyle='#241d17';g.fillRect(0,0,640,480);
+      const fade=Math.min(1,(now-changed)/550);if(fade<1&&sceneId!==previousScene){picture(previousScene,1);picture(sceneId,fade);}else picture(sceneId,1);
+      let grad=g.createLinearGradient(0,255,0,480);grad.addColorStop(0,'rgba(29,23,17,0)');grad.addColorStop(.48,'rgba(29,23,17,.72)');grad.addColorStop(1,'rgba(29,23,17,.98)');g.fillStyle=grad;g.fillRect(0,255,640,225);
+      grad=g.createLinearGradient(0,0,0,100);grad.addColorStop(0,'rgba(25,22,17,.5)');grad.addColorStop(1,'rgba(25,22,17,0)');g.fillStyle=grad;g.fillRect(0,0,640,100);
+      g.fillStyle='#f6e7c9';g.font='15px "Microsoft YaHei",sans-serif';g.fillText('听见 · 岁月',25,34);
+      g.fillStyle='#e7d6b8';g.font='10px "Microsoft YaHei",sans-serif';g.fillText(D.backgrounds[sceneId].label,25,52);
+      const local=debugTime===null?(audio.currentTime||0):debugTime;
+      const song=D.origin+local+Number(offset.value);
+      const selection=chooseLine(song),line=selection.line;
+      if(line){
+        const n=line.words.length,size=Math.min(56,590/(n*1.03)),spacing=size*1.03;
+        const left=320-(n-1)*spacing/2;
+        const lineFade=selection.opacity;
+        for(let i=0;i<n;i++){
+          const w=line.words[i],age=song-w.s;if(age<0)continue;
+          const active=song<=w.e;
+          const beat=motion.checked?env:0;
+          const phase=Math.min(1,age/.44);
+          let lift=0,scale=1;
+          if(!reduced&&motion.checked){lift=phase<.5?29*Math.pow(1-phase*2,2):-(7+beat*14)*Math.sin((phase-.5)*Math.PI*2)*Math.exp(-(phase-.5)*4);scale=1+.09*Math.sin(Math.min(1,age/.3)*Math.PI);}
+          const sustain=active&&motion.checked&&!reduced?-beat*4:0;
+          const x=left+i*spacing,y=405+lift+sustain;
+          const opacity=Math.min(1,age/.055)*lineFade;
+          glyph(w.c,x+1,y+2,size*scale,'#3c2719',opacity*.95);
+          g.shadowColor=active?'#efbd76':'transparent';g.shadowBlur=active?5+beat*7:0;
+          glyph(w.c,x,y,size*scale,active?'#f5c784':'#f6ecd4',opacity);g.shadowBlur=0;
+          if(active){g.beginPath();g.strokeStyle='#d8a45c';g.lineWidth=1.2;g.moveTo(x-size*.23,432);g.quadraticCurveTo(x,434+beat*2,x+size*.25,431);g.globalAlpha=.75*opacity;g.stroke();g.globalAlpha=1;}
+        }
+      }else{
+        g.fillStyle='#e9d4ae';g.textAlign='center';g.font='20px "KaiTi",serif';g.fillText(local<2?'让照片，慢慢唱起来':'那些被岁月留下的声音',320,407);g.textAlign='left';
+      }
+      g.fillStyle='#b2a18a';g.font='10px "Microsoft YaHei",sans-serif';g.textAlign='center';g.fillText('我记得  /  赵雷',320,458);g.textAlign='left';
+      if(debugTime===null){seek.value=local;clock.textContent=times(local)+' / '+times(D.duration);}
+      root.dataset.time=local.toFixed(3);root.dataset.envelope=env.toFixed(4);root.dataset.visibleWords=line?line.words.filter(w=>song>=w.s).length:0;
+      root.dataset.lineIndex=selection.index;root.dataset.lineOpacity=selection.opacity.toFixed(3);
+      requestAnimationFrame(render);
+    }
+    root.__preview={audio,data:D,chooseLine,renderAt(t){debugTime=t;},live(){debugTime=null;},get envelope(){return env},get context(){return ac},get analyser(){return analyser},get failed(){return failed}};
+    requestAnimationFrame(render);
+  })();
+  </script>
+</div>

@@ -1,0 +1,183 @@
+[
+  {
+    "name": "mem40_red",
+    "accepted": true,
+    "steps": [
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlib.exe",
+          "work"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/mem40_red/0.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlog.exe",
+          "-work",
+          "work",
+          "<TD_HOME>/sim_release/eg4/eg_phy_pll.v",
+          "<TD_HOME>/sim_release/eg4/eg_logic_clk.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/mem40_red/sys_pll.v"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/mem40_red/1.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlog.exe",
+          "-sv",
+          "-work",
+          "work",
+          "+define+TEST_C3",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/tb_sys_pll_period.sv"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/mem40_red/2.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vsim.exe",
+          "-c",
+          "-t",
+          "100fs",
+          "-onfinish",
+          "exit",
+          "-gMEM_PERIOD_NS=20.0",
+          "-gCHECK_C3=1",
+          "-gC3_PERIOD_NS=20.0",
+          "work.tb_sys_pll_period",
+          "-do",
+          "do run.do"
+        ],
+        "native_exit": 1,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/mem40_red/3.log"
+      }
+    ],
+    "measurements": [
+      "PLL_MEASUREMENT_MISMATCH channel=C2 got_period_ns=25.000000 expected_ns=20.000000"
+    ]
+  },
+  {
+    "name": "candidate",
+    "accepted": true,
+    "steps": [
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlib.exe",
+          "work"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/candidate/0.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlog.exe",
+          "-work",
+          "work",
+          "<TD_HOME>/sim_release/eg4/eg_phy_pll.v",
+          "<TD_HOME>/sim_release/eg4/eg_logic_clk.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/candidate/sys_pll.v"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/candidate/1.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlog.exe",
+          "-sv",
+          "-work",
+          "work",
+          "+define+TEST_C3",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/tb_sys_pll_period.sv"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/candidate/2.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vsim.exe",
+          "-c",
+          "-t",
+          "100fs",
+          "-onfinish",
+          "exit",
+          "-gMEM_PERIOD_NS=20.0",
+          "-gCHECK_C3=1",
+          "-gC3_PERIOD_NS=20.0",
+          "work.tb_sys_pll_period",
+          "-do",
+          "do run.do"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/candidate/3.log"
+      }
+    ],
+    "measurements": [
+      "PASS PLL_MODEL C0_period_ns_min=10.000000 max=10.000000 samples=257",
+      "PASS PLL_MODEL C1_period_ns_min=20.000000 max=20.000000 samples=128",
+      "PASS PLL_MODEL C2_period_ns_min=20.000000 max=20.000000 samples=128",
+      "PASS PLL_MODEL C2_after_C1_ns_min=8.375000 max=8.375000 samples=129",
+      "PASS PLL_MODEL C3_period_ns_min=20.000000 max=20.000000 samples=128"
+    ]
+  },
+  {
+    "name": "wrong_phase_red",
+    "accepted": true,
+    "steps": [
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlib.exe",
+          "work"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/wrong_phase_red/0.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlog.exe",
+          "-work",
+          "work",
+          "<TD_HOME>/sim_release/eg4/eg_phy_pll.v",
+          "<TD_HOME>/sim_release/eg4/eg_logic_clk.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/wrong_phase_red/sys_pll.v"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/wrong_phase_red/1.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vlog.exe",
+          "-sv",
+          "-work",
+          "work",
+          "+define+TEST_C3",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/tb_sys_pll_period.sv"
+        ],
+        "native_exit": 0,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/wrong_phase_red/2.log"
+      },
+      {
+        "command": [
+          "<MODELSIM_HOME>/vsim.exe",
+          "-c",
+          "-t",
+          "100fs",
+          "-onfinish",
+          "exit",
+          "-gMEM_PERIOD_NS=20.0",
+          "-gCHECK_C3=1",
+          "-gC3_PERIOD_NS=20.0",
+          "work.tb_sys_pll_period",
+          "-do",
+          "do run.do"
+        ],
+        "native_exit": 1,
+        "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/native_pll50/wrong_phase_red/3.log"
+      }
+    ],
+    "measurements": [
+      "PLL_PHASE_MISMATCH C2_after_C1_ns=8.000000 expected_ns=8.375000"
+    ]
+  }
+]

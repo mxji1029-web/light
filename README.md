@@ -107,4 +107,3 @@ daf733e618c40b0ff3cc9948df83dd354099961012be393a167ee06ceb56646c
 平台HDMI、PLL、FIFO、存储原语及加密SDRAM IP保留提供方声明，使用时需要相应开发环境与许可。第三方参考遵循各自许可证，见[NOTICE](NOTICE)和[转场参考许可](third_party/gl_transitions_reference/LICENSE)。仓库没有对全部平台IP、素材与源码统一授予MIT许可。
 
 `SHA256SUMS.json`记录公开文件的校验值，排除清单自身和Git元数据。
-

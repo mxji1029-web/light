@@ -1,0 +1,301 @@
+{
+  "scope": "Compile and score the diagnostic RTL against an addressed App backend.\n\nThis is not the encrypted SDRAM controller or a DRAM AC/pin simulation.\n",
+  "source_sha256": {
+    "sdram_address_selftest.v": "63c75e4b3247219c8a4739e725a7db2fc025a96783becc99d44a6360922a2a76",
+    "tb_address_selftest.sv": "04ea4a5c605854d50cbd95ffefcad1f857f5b022a8bd95c6e253e5088fbbdf16"
+  },
+  "runs": [
+    {
+      "name": "good_1024_words",
+      "address_bits": 10,
+      "canary": 0,
+      "accepted": true,
+      "native_exit": 0,
+      "wall_seconds": 0.04699999999957072,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=0",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/good_1024_words/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/good_1024_words/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=0 addr_bits=10 words=1024 pass=1 failed=0 errors=0 flags=0 first_address=000 expected=00000000 actual=00000000 first_pattern=0 writes=3072 reads=3072 checked=3072 responses=3072 refresh_cycles=13 cycles=6984\r\nPASS contract and fault verdict verified\r\n<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:146: $finish called at 175213500 (1ps)\r\n"
+    },
+    {
+      "name": "tail_word_corruption",
+      "address_bits": 10,
+      "canary": 1,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.06199999999989814,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=1",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/tail_word_corruption/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/tail_word_corruption/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=1 addr_bits=10 words=1024 pass=0 failed=1 errors=1 flags=1 first_address=0ff expected=a5c39e8e actual=a5c39e8f first_pattern=0 writes=3072 reads=3072 checked=3072 responses=3072 refresh_cycles=13 cycles=6984\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 175213500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "missing_valid",
+      "address_bits": 10,
+      "canary": 2,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.032000000000152795,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=2",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/missing_valid/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/missing_valid/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=2 addr_bits=10 words=1024 pass=0 failed=1 errors=0 flags=4 first_address=0ff expected=a5c39e8e actual=a5c39e8e first_pattern=0 writes=1024 reads=256 checked=255 responses=255 refresh_cycles=13 cycles=1963\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 49688500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "unsolicited_valid",
+      "address_bits": 10,
+      "canary": 3,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.046000000000276486,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=3",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/unsolicited_valid/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/unsolicited_valid/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=3 addr_bits=10 words=1024 pass=0 failed=1 errors=1 flags=2 first_address=000 expected=00000000 actual=deadbeef first_pattern=0 writes=3072 reads=3072 checked=3072 responses=3073 refresh_cycles=13 cycles=6984\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 175213500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "address_alias",
+      "address_bits": 10,
+      "canary": 4,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.06300000000010186,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=4",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/address_alias/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/address_alias/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=4 addr_bits=10 words=1024 pass=0 failed=1 errors=2048 flags=1 first_address=000 expected=a5c39e71 actual=a5c39c71 first_pattern=0 writes=3072 reads=3072 checked=3072 responses=3072 refresh_cycles=13 cycles=6984\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 175213500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "init_loss",
+      "address_bits": 10,
+      "canary": 5,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.014999999999417923,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=5",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/init_loss/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/init_loss/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=5 addr_bits=10 words=1024 pass=0 failed=1 errors=0 flags=8 first_address=000 expected=00000000 actual=00000000 first_pattern=0 writes=1024 reads=101 checked=88 responses=88 refresh_cycles=0 cycles=1283\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 32688500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "stuck_busy",
+      "address_bits": 10,
+      "canary": 6,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.03099999999994907,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=6",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/stuck_busy/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/stuck_busy/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=6 addr_bits=10 words=1024 pass=0 failed=1 errors=0 flags=4 first_address=000 expected=a5c39e71 actual=00000000 first_pattern=0 writes=0 reads=0 checked=0 responses=0 refresh_cycles=13 cycles=534\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 13963500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "unknown_data",
+      "address_bits": 10,
+      "canary": 7,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.04699999999957072,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=7",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/unknown_data/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/unknown_data/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=7 addr_bits=10 words=1024 pass=0 failed=1 errors=1 flags=1 first_address=0ff expected=a5c39e8e actual=xxxxxxxx first_pattern=0 writes=3072 reads=3072 checked=3072 responses=3072 refresh_cycles=13 cycles=6984\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 175213500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "illegal_phase",
+      "address_bits": 10,
+      "canary": 8,
+      "accepted": true,
+      "native_exit": 1,
+      "wall_seconds": 0.01599999999962165,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=10",
+          "-P",
+          "tb_address_selftest.CANARY=8",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/illegal_phase/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/illegal_phase/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=8 addr_bits=10 words=1024 pass=0 failed=1 errors=0 flags=2 first_address=000 expected=00000000 actual=00000000 first_pattern=0 writes=20 reads=0 checked=0 responses=0 refresh_cycles=0 cycles=43\r\nPASS contract and fault verdict verified\r\nFATAL: <HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:145: EXPECTED_REJECTION: diagnostic rejected injected fault\r\n       Time: 1688500  Scope: tb_address_selftest\r\n"
+    },
+    {
+      "name": "good_full_8MiB",
+      "address_bits": 21,
+      "canary": 0,
+      "accepted": true,
+      "native_exit": 0,
+      "wall_seconds": 84.45300000000043,
+      "commands": [
+        [
+          "<IVERILOG_BIN>/iverilog.exe",
+          "-g2012",
+          "-s",
+          "tb_address_selftest",
+          "-P",
+          "tb_address_selftest.ADDR_BITS=21",
+          "-P",
+          "tb_address_selftest.CANARY=0",
+          "-o",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/good_full_8MiB/test.vvp",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/sdram_address_selftest.v",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv"
+        ],
+        [
+          "<IVERILOG_BIN>/vvp.exe",
+          "<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/runs/contract_v3/good_full_8MiB/test.vvp"
+        ]
+      ],
+      "result": "RESULT canary=0 addr_bits=21 words=2097152 pass=1 failed=0 errors=0 flags=0 first_address=000000 expected=00000000 actual=00000000 first_pattern=0 writes=6291456 reads=6291456 checked=6291456 responses=6291456 refresh_cycles=28350 cycles=14263549\r\nPASS contract and fault verdict verified\r\n<HISTORICAL_PROJECT>/material/mem40_20261028/diagnostic/tb_address_selftest.sv:146: $finish called at 356589338500 (1ps)\r\n"
+    }
+  ],
+  "sources_unchanged": true,
+  "accepted": true
+}

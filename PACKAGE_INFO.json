@@ -1,0 +1,22 @@
+{
+  "project": "光语者：让照片听得见",
+  "profile": "MEM50",
+  "device": "EG4S20BG256",
+  "board": "HX4S20C",
+  "source_inputs": 113,
+  "diagnostic_inputs": 114,
+  "pictures_in_original_demo": 22,
+  "public_preview_images": 1,
+  "lyrics_lines": 47,
+  "lyrics_events": 466,
+  "audio_sample_rate_hz": 48000,
+  "fft_points": 1024,
+  "spectrum_bands": 32,
+  "album_bit_sha256": "daf733e618c40b0ff3cc9948df83dd354099961012be393a167ee06ceb56646c",
+  "diagnostic_bit_sha256": "dbd40c4197550a08299f19e1f9dc076a33976069ffad09e21fa3cba94a8b88f7",
+  "source_provenance": "20261028_mem50_sip_candidate",
+  "hardware_acceptance": "Previously user-reported functional playback, Flash and cold-start normal; no new hardware action during public packaging.",
+  "publication_scope": "Source, build descriptors, bitstreams and selected validation. Original TF BMP/PCM media excluded; generated lyric/font ROM resources retained for compilation.",
+  "validation_path_redaction": "Historical absolute host roots replaced in model-test JSON copies only; source and reports unchanged.",
+  "package_date": "2026-11-03"
+}

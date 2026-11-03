@@ -1,0 +1,73 @@
+{
+  "scope": "Native unchanged encrypted controller, shadow header with frequency-derived period and 15.6us refresh terminal. Official IS42s32200 -7 surrogate only; not EM638325 min/max or physical DQ/AC signoff. Optional alignment is a bench-side one-cycle public rd_data register; raw output is independently counted.",
+  "mem_mhz": 50,
+  "forward_delay_ns": 8.375,
+  "align_data": 1,
+  "canary": 0,
+  "model_tAC_ns": 5.5,
+  "tAC_override_is_nonphysical_sensitivity": false,
+  "commands": [
+    {
+      "command": [
+        "<MODELSIM_HOME>/vlib.exe",
+        "work"
+      ],
+      "native_exit": 0,
+      "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/0_vlib.log"
+    },
+    {
+      "command": [
+        "<MODELSIM_HOME>/vlog.exe",
+        "-modelsimini",
+        "modelsim.ini",
+        "-permissive",
+        "-sv",
+        "-work",
+        "work",
+        "+incdir+<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/shadow/td_project",
+        "+incdir+<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/shadow/user_source/hdl_source/include",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/shadow/user_source/hdl_source/include/sdr_init_ref.enc.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/shadow/user_source/hdl_source/include/sdr_wrrd.enc.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/shadow/user_source/hdl_source/include/sdr_as_ram.enc.v",
+        "<HISTORICAL_PROJECT>/material/vendor_review_20261022/timing_audit/references/APUG011_high_performance_sdram_read_write_reference_design_v1.2/IS42s32200.v",
+        "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/tb_readback40.sv"
+      ],
+      "native_exit": 0,
+      "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/1_vlog.log"
+    },
+    {
+      "command": [
+        "<MODELSIM_HOME>/vsim.exe",
+        "-c",
+        "-modelsimini",
+        "modelsim.ini",
+        "-l",
+        "transcript.log",
+        "-do",
+        "run.do"
+      ],
+      "native_exit": 0,
+      "log": "<HISTORICAL_PROJECT>/material/mem40_20261028/readback/runs/aligned50_offset8p375/2_vsim.log"
+    }
+  ],
+  "source_sha256": {
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/sdr_init_ref.enc.v": "6da5945f4af793610d0d64c65c7e5d2d1c86ed4c11bc5fdeacd27eb03178b9f6",
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/sdr_wrrd.enc.v": "c7d7fe07d75f66aa88d9f986b3006319c995162434f104f9990664b374cdfdd2",
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/sdr_as_ram.enc.v": "767dbdfbd83d42223b77dfa7deab42ce8216a8fd6f6cb41b7e7593d9a345ba57",
+    "<HISTORICAL_PROJECT>/proj/src/user_source/hdl_source/include/global_def.v": "b3505d4d960fd21e07630be0ad3d0730dd26041fbf34707a6faff4ff4617a82b",
+    "<HISTORICAL_PROJECT>/material/vendor_review_20261022/timing_audit/references/APUG011_high_performance_sdram_read_write_reference_design_v1.2/IS42s32200.v": "6aad09c411b00e319ea6e7ff5a85453eb990532541ae368084406f78a276690b"
+  },
+  "inputs_unchanged": true,
+  "shadow_header": "\n\n\n`define   DATA_WIDTH                        32\n`define   ADDR_WIDTH                        21\n`define   DM_WIDTH                          4\n\n`define   ROW_WIDTH                        11\n`define   BA_WIDTH                        2\n\n`define SDR_CLK_PERIOD (1000000000/50000000)\n// Conservative 15.6us interval; native controller counts terminal+1 clocks.\n`define   SELF_REFRESH_INTERVAL             ((15600 / `SDR_CLK_PERIOD) - 1)\n\n",
+  "shadow_sha256": {
+    "global_def.v": "02d2922a795400259920ddcc08ed413d3dda74f5370a600a518a0a18dc09bc6b",
+    "sdr_as_ram.enc.v": "767dbdfbd83d42223b77dfa7deab42ce8216a8fd6f6cb41b7e7593d9a345ba57",
+    "sdr_init_ref.enc.v": "6da5945f4af793610d0d64c65c7e5d2d1c86ed4c11bc5fdeacd27eb03178b9f6",
+    "sdr_wrrd.enc.v": "c7d7fe07d75f66aa88d9f986b3006319c995162434f104f9990664b374cdfdd2"
+  },
+  "bench_sha256": "ef45c7cc1a2a7e3012c9a90e1d5702bf5d6f9f872c32b5d03196e61447982522",
+  "result": "BEGIN unchanged encrypted sdr_as_ram+sdr_wrrd;MHz=50.000000;forward_delay_ns=8.375000;IS42 model;tOH=2.500000;tAC=5.500000;AC checks enabled;ALIGN_DATA=1;CANARY=0\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=0 count=16 received=16 latency=11\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=256 count=256 received=256 latency=11\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=65536 count=16 received=16 latency=11\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=262144 count=16 received=16 latency=11\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=1048576 count=16 received=16 latency=11\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=0 count=16 received=16 latency=11\nFIRST_LATENCY consumed_at_app_edge=11\nREAD base=256 count=256 received=256 latency=11\nEND completed=1 failures=0 checked=592 raw_mismatches=592 first_mismatches=0 last_mismatches=0 read_commands=148 init_refresh_commands=0 auto_refresh_commands=4 total_refresh_commands=4\n",
+  "native_exit": 0,
+  "functional_surrogate_pass": true,
+  "em638325_signoff": false
+}

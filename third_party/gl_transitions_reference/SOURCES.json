@@ -1,0 +1,48 @@
+{
+  "repository": "https://github.com/gl-transitions/gl-transitions",
+  "commit": "66a975917ab01a738408c81eb74fd329935e1c72",
+  "review_date": "2026-10-22",
+  "implementation": "Original integer RTL adaptations of geometry; spatial feather uses binary old/new selection, not GLSL alpha mixing; no GPU or FFmpeg dependency",
+  "files": [
+    {
+      "path": "LICENSE",
+      "blob_sha": "7a1f053650848112e9448f829b3a5c81ea405e45",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/LICENSE"
+    },
+    {
+      "path": "transitions/directionalwipe.glsl",
+      "blob_sha": "05e8266f18d80584872715aa737b55457969942c",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/directionalwipe.glsl"
+    },
+    {
+      "path": "transitions/circleopen.glsl",
+      "blob_sha": "8e89aa8731d9319dc32fe0ca0f5a56d3806aa32c",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/circleopen.glsl"
+    },
+    {
+      "path": "transitions/wind.glsl",
+      "blob_sha": "2f0ff1553118848ac70cc956ee910cdace640d8e",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/wind.glsl"
+    },
+    {
+      "path": "transitions/windowslice.glsl",
+      "blob_sha": "33beca86ee1cfd4928b8b3ec20d8ca540368f9cc",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/windowslice.glsl"
+    },
+    {
+      "path": "transitions/randomsquares.glsl",
+      "blob_sha": "ac73fb29d26016792756a3a8d1f5daf03af90856",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/randomsquares.glsl"
+    },
+    {
+      "path": "transitions/PolkaDotsCurtain.glsl",
+      "blob_sha": "aa4f3aaa85ba038eeb54aaec42113dbff675dff8",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/PolkaDotsCurtain.glsl"
+    },
+    {
+      "path": "transitions/squareswire.glsl",
+      "blob_sha": "ca3d42148cad8cb600ecfba0bedee6afb8e6642c",
+      "url": "https://github.com/gl-transitions/gl-transitions/blob/66a975917ab01a738408c81eb74fd329935e1c72/transitions/squareswire.glsl"
+    }
+  ]
+}

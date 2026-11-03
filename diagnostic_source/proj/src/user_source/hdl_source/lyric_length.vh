@@ -1,0 +1,1 @@
+localparam [23:0] LYRIC_SAMPLES=24'd15836464;

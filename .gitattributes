@@ -1,0 +1,2 @@
+# Preserve frozen RTL, encrypted IP and generated ROM bytes across clones.
+* -text
